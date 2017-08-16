@@ -1,4 +1,4 @@
-package steps.Guru99;
+package steps;
 
 import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
@@ -12,7 +12,9 @@ import runner.Extension;
 import runner.Global;
 import runner.WebBrowser;
 
-public class Day1Steps extends Global {
+import java.util.Set;
+
+public class GuruSteps extends Global {
 
     WebDriver driver = WebBrowser.driver;
     Extension extension = new Extension();
@@ -42,7 +44,7 @@ public class Day1Steps extends Global {
         extension.SelectElementByValue(By.cssSelector("select[title='Sort By']"), "http://live.guru99.com/index.php/mobile.html?dir=asc&order=name");
     }
 
-    @Then("^Verify products are sorted by name$")
+    @Then("^Verify products are sorted by name$$")
     public void verifyProductsAreSortedByName() throws Throwable {
         extension.WaitUntilIsElementExistsAndDisplayed(By.xpath("//ul/li/div/h2/a[text()='IPhone']"));
         Assert.assertTrue(driver.findElement(By.xpath("//ul/li[1]/div/h2/a[text()='IPhone']")).isDisplayed());
@@ -70,5 +72,62 @@ public class Day1Steps extends Global {
     @Then("^Verify both the values are equal$")
     public void verifyBothTheValuesAreEqual() throws Throwable {
         Assert.assertEquals(ValList, ValDetail);
+    }
+
+    @And("^I click on Add to cart for Sony Xperia$")
+    public void iClickOnAddToCartForSonyXperia() throws Throwable {
+        extension.Click(By.xpath("//a[text()='Sony Xperia']/following::div/button/span/span[text()='Add to Cart']"));
+    }
+
+    @And("^Change the Quantity to \"([^\"]*)\"$")
+    public void changeTheQuantityTo(String qty) throws Throwable {
+        extension.SendKeys(By.xpath("//a[text()='Sony Xperia']/following::td/input[@title='Qty']"),qty);
+    }
+
+    @And("^Click on Update$")
+    public void clickOnUpdate() throws Throwable {
+        extension.Click(By.xpath("//a[text()='Sony Xperia']/following::td/button/span/span[text()='Update']"));
+    }
+
+    @Then("^An Error message is displayed \"([^\"]*)\"$")
+    public void anErrorMessageIsDisplayed(String msg) throws Throwable {
+        extension.WaitUntilIsElementExistsAndDisplayed(By.xpath("//p[contains(text(),'" + msg  + "')]"));
+        Assert.assertTrue(driver.findElement(By.xpath("//span[text()='Some of the products cannot be ordered in requested quantity.']")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.xpath("//p[contains(text(),'" + msg  + "')]")).isDisplayed());
+    }
+
+    @When("^I click on Empty cart link$")
+    public void iClickOnEmptyCartLink() throws Throwable {
+        extension.Click(By.id("empty_cart_button"));
+    }
+
+    @Then("^\"([^\"]*)\" message should be displayed$")
+    public void messageShouldBeDisplayed(String msg) throws Throwable {
+        extension.WaitUntilIsElementExistsAndDisplayed(By.xpath("//h1[text()='" + msg  + "']"));
+        Assert.assertTrue(driver.findElement(By.xpath("//h1[text()='" + msg  + "']")).isDisplayed());
+    }
+
+    @And("^Click on Compare button$")
+    public void clickOnCompareButton() throws Throwable {
+        extension.Click(By.xpath("//span[text()='Compare']"));
+    }
+
+    @Then("^A new pop up window should be displayed and (\\d+) products should be displayed$")
+    public void aNewPopUpWindowShouldBeDisplayedAndProductsShouldBeDisplayed(int arg0) throws Throwable {
+        Set handles= driver.getWindowHandles();
+        for (String handle1 : driver.getWindowHandles())
+            driver.switchTo().window(handle1);
+        Assert.assertTrue(driver.findElement(By.xpath("//h1[text()='Compare Products']")).isDisplayed());
+    }
+
+    @And("^Close the popup window$")
+    public void closeThePopupWindow() throws Throwable {
+        extension.Click(By.xpath("//span[text()='Close Window']"));
+    }
+
+    @And("^I click on Add to Compare button for (\\d+) products$")
+    public void iClickOnAddToCompareButtonForProducts(int arg0) throws Throwable {
+        extension.Click(By.xpath("//a[text()='Samsung Galaxy']/ancestor::div/div/ul/li/a[text()='Add to Compare']"));
+        extension.Click(By.xpath("//a[text()='Sony Xperia']/ancestor::div/div/ul/li/a[text()='Add to Compare']"));
     }
 }

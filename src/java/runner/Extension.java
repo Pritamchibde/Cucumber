@@ -10,7 +10,7 @@ public class Extension {
 
     public void WaitUntilIsElementExistsAndDisplayed(By Locator) {
         try {
-            WebDriverWait wait = new WebDriverWait(WebBrowser.driver, 90);
+            WebDriverWait wait = new WebDriverWait(WebBrowser.driver, 60);
             wait.until(ExpectedConditions.visibilityOfElementLocated(Locator));
             wait.until(ExpectedConditions.presenceOfElementLocated(Locator));
         } catch (Exception ex) {
