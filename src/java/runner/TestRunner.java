@@ -23,12 +23,10 @@ public class TestRunner {
         System.out.println("Test Started");
         Result result = JUnitCore.runClasses(TestRunner.class);
 
-        System.out.println("Test Completed");
         for (Failure failure : result.getFailures()) {
             System.out.println(failure.getMessage());
         }
+
         System.out.println(result.wasSuccessful());
     }
-
-
 }

@@ -81,7 +81,7 @@ public class GuruSteps extends Global {
 
     @And("^Change the Quantity to \"([^\"]*)\"$")
     public void changeTheQuantityTo(String qty) throws Throwable {
-        extension.SendKeys(By.xpath("//a[text()='Sony Xperia']/following::td/input[@title='Qty']"),qty);
+        extension.SendKeys(By.xpath("//a[text()='Sony Xperia']/following::td/input[@title='Qty']"), qty);
     }
 
     @And("^Click on Update$")
@@ -91,9 +91,9 @@ public class GuruSteps extends Global {
 
     @Then("^An Error message is displayed \"([^\"]*)\"$")
     public void anErrorMessageIsDisplayed(String msg) throws Throwable {
-        extension.WaitUntilIsElementExistsAndDisplayed(By.xpath("//p[contains(text(),'" + msg  + "')]"));
+        extension.WaitUntilIsElementExistsAndDisplayed(By.xpath("//p[contains(text(),'" + msg + "')]"));
         Assert.assertTrue(driver.findElement(By.xpath("//span[text()='Some of the products cannot be ordered in requested quantity.']")).isDisplayed());
-        Assert.assertTrue(driver.findElement(By.xpath("//p[contains(text(),'" + msg  + "')]")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.xpath("//p[contains(text(),'" + msg + "')]")).isDisplayed());
     }
 
     @When("^I click on Empty cart link$")
@@ -103,8 +103,8 @@ public class GuruSteps extends Global {
 
     @Then("^\"([^\"]*)\" message should be displayed$")
     public void messageShouldBeDisplayed(String msg) throws Throwable {
-        extension.WaitUntilIsElementExistsAndDisplayed(By.xpath("//h1[text()='" + msg  + "']"));
-        Assert.assertTrue(driver.findElement(By.xpath("//h1[text()='" + msg  + "']")).isDisplayed());
+        extension.WaitUntilIsElementExistsAndDisplayed(By.xpath("//h1[text()='" + msg + "']"));
+        Assert.assertTrue(driver.findElement(By.xpath("//h1[text()='" + msg + "']")).isDisplayed());
     }
 
     @And("^Click on Compare button$")
@@ -114,7 +114,7 @@ public class GuruSteps extends Global {
 
     @Then("^A new pop up window should be displayed and (\\d+) products should be displayed$")
     public void aNewPopUpWindowShouldBeDisplayedAndProductsShouldBeDisplayed(int arg0) throws Throwable {
-        Set handles= driver.getWindowHandles();
+        Set handles = driver.getWindowHandles();
         for (String handle1 : driver.getWindowHandles())
             driver.switchTo().window(handle1);
         Assert.assertTrue(driver.findElement(By.xpath("//h1[text()='Compare Products']")).isDisplayed());
